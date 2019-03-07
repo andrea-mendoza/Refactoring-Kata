@@ -16,8 +16,7 @@ export default function createStatementData(invoice, plays) {
   function playFor(aPerformance) {
     return plays[aPerformance.playID];
   }
-
-
+  
   function totalAmount(data) {
     let result = 0;
     for (let perf of data.performances) {
