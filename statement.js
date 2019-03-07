@@ -1,4 +1,8 @@
 function statement (invoice, plays) {
+  return renderPlainText(createStatementData(invoice, plays));
+}
+
+function createStatementData (invoice, plays) {
   const statementData = {};
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances;
@@ -6,7 +10,7 @@ function statement (invoice, plays) {
   statementData.totalAmount = totalAmount(statementData);
   statementData.totalVolumeCredits = totalVolumeCredits(statementData);
 
-  return renderPlainText(statementData, plays);
+  return statementData;
 
   function enrichPerformance(aPerformance) {
     const result = Object.assign({}, aPerformance);
@@ -52,8 +56,11 @@ function statement (invoice, plays) {
   }
 
   function totalAmount(data) {
-    return data.performances
-        .reduce((total, p) => total + p.amount, 0);
+    let result = 0;
+    for (let perf of data.performances) {
+      result += perf.amount;
+    }
+    return result;
   }
   function totalVolumeCredits(data) {
     let result = 0;
@@ -73,7 +80,6 @@ function renderPlainText (data, plays) {
 
   result += `Amount owed is ${usd(data.totalAmount)}\n`;
   result += `You earned ${data.totalVolumeCredits} credits\n`;
-
   return result;
 
   function usd(aNumber) {
