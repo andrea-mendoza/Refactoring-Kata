@@ -19,15 +19,15 @@ export default function createStatementData(invoice, plays) {
   
   function totalAmount(data) {
     let result = 0;
-    for (let perf of data.performances) {
-      result += perf.amount;
+    for (let dataPerformance of data.performances) {
+      result += dataPerformance.amount;
     }
     return result;
   }
   function totalVolumeCredits(data) {
     let result = 0;
-    for (let perf of data.performances) {
-      result += perf.volumeCredits;
+    for (let dataPerformance of data.performances) {
+      result += dataPerformance.volumeCredits;
     }
     return result;
   }
