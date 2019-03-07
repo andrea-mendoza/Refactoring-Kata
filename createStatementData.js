@@ -1,24 +1,3 @@
-function createPerformanceCalculator(aPerformance, aPlay) {
-  switch(aPlay.type) {
-    case "tragedy": return new TragedyCalculator(aPerformance, aPlay);
-    case "comedy" : return new ComedyCalculator(aPerformance, aPlay);
-    default:
-      throw new Error(`unknown type: ${aPlay.type}`);
-  }
-}
-
-class PerformanceCalculator {
-  constructor(aPerformance, aPlay) {
-    this.performance = aPerformance;
-    this.play = aPlay;
-  }
-  get amount() {
-    throw new Error('subclass responsibility');
-  }
-  get volumeCredits() {
-    return Math.max(this.performance.audience - 30, 0); }
-}
-
 export default function createStatementData(invoice, plays) {
   const result = {};
   result.customer = invoice.customer;
@@ -53,6 +32,26 @@ export default function createStatementData(invoice, plays) {
     }
     return result;
   }
+}
+function createPerformanceCalculator(aPerformance, aPlay) {
+  switch(aPlay.type) {
+    case "tragedy": return new TragedyCalculator(aPerformance, aPlay);
+    case "comedy" : return new ComedyCalculator(aPerformance, aPlay);
+    default:
+      throw new Error(`unknown type: ${aPlay.type}`);
+  }
+}
+
+class PerformanceCalculator {
+  constructor(aPerformance, aPlay) {
+    this.performance = aPerformance;
+    this.play = aPlay;
+  }
+  get amount() {
+    throw new Error('subclass responsibility');
+  }
+  get volumeCredits() {
+    return Math.max(this.performance.audience - 30, 0); }
 }
 
 class TragedyCalculator extends PerformanceCalculator {
